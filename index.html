@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 8 Vectors Quiz - 100 Question Bank</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .instruction {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: #f9fbfc;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .options label:hover {
+            background-color: #eaf2f8;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .incorrect-text {
+            color: #e74c3c;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .note {
+            font-size: 0.9em;
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Timer Styles */
+        #timer-display {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* Setup Styles */
+        .setup-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .setup-input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        /* Custom Dialog Styles */
+        #custom-dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .custom-dialog {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .custom-dialog h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .custom-dialog p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .custom-dialog button {
+            margin-top: 0;
+        }
+
+        /* Modern Result Card */
+        .result-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+        }
+
+        .result-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .result-score-container {
+            margin: 30px 0;
+        }
+
+        .result-score-value {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .result-score-label {
+            font-size: 18px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .score-excellent {
+            color: #27ae60;
+        }
+
+        .score-excellent-bg::before {
+            background: #27ae60;
+        }
+
+        .score-good {
+            color: #f39c12;
+        }
+
+        .score-good-bg::before {
+            background: #f39c12;
+        }
+
+        .score-poor {
+            color: #e74c3c;
+        }
+
+        .score-poor-bg::before {
+            background: #e74c3c;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .stat-box span {
+            display: block;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-box strong {
+            font-size: 20px;
+            color: #2c3e50;
+        }
+
+        /* Accordion Styles */
+        .accordion-header {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: #dfe6e9;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 5px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .review-item.correct {
+            border-left-color: #27ae60;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #e74c3c;
+        }
+
+        .review-item p {
+            margin: 5px 0;
+        }
+    </style>
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Grade 8 Vectors Practice</h1>
+        <div class="note">
+            <strong>Notation:</strong> Column vectors are written as [Top, Bottom]. <br>
+            [Right/Left, Up/Down]. Example: [3, -2] = 3 Right, 2 Down.
+        </div>
+        <div id="quiz-setup">
+            <p class="instruction">Enter your name to begin:</p>
+            <input type="text" id="student-name-input" class="setup-input" placeholder="Your Full Name">
+
+            <p class="instruction">Choose the number of questions:</p>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                <button onclick="startQuiz(10)">10 Questions</button>
+                <button onclick="startQuiz(20)">20 Questions</button>
+                <button onclick="startQuiz(50)">50 Questions</button>
+            </div>
+            <p class="instruction" style="font-size: 14px;">Questions will be randomly selected from a pool of 100.</p>
+        </div>
+
+        <div id="quiz-container" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <div id="timer-display">Time: 00:00</div>
+                <div id="progress-bar" style="text-align: right; font-size: 14px; color: #7f8c8d;"></div>
+            </div>
+            <form id="quiz-form">
+                <div id="questions-container"></div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" id="prev-btn" onclick="prevQuestion()"
+                        style="display:none; background-color: #95a5a6;">Previous</button>
+                    <button type="button" id="next-btn" onclick="nextQuestion()">Next</button>
+                    <button type="button" id="submit-btn" onclick="showResults()"
+                        style="display:none; background-color: #27ae60;">Submit Answers</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <!-- Custom Dialog -->
+    <div id="custom-dialog-overlay">
+        <div class="custom-dialog">
+            <h2 id="dialog-title">Notice</h2>
+            <p id="dialog-message">Message goes here.</p>
+            <button onclick="closeDialog()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Pool of 100 Questions for Grade 8
+        const allQuestions = [
+            // --- SCALARS VS VECTORS (Concepts & Definitions) ---
+            { q: "A scalar quantity has:", options: ["Direction only", "Magnitude only", "Magnitude and direction", "Neither"], a: 1 },
+            { q: "A vector quantity has:", options: ["Direction only", "Magnitude only", "Magnitude and direction", "Neither"], a: 2 },
+            { q: "Which of the following is a scalar?", options: ["Velocity", "Force", "Mass", "Displacement"], a: 2 },
+            { q: "Which of the following is a vector?", options: ["Speed", "Time", "Temperature", "Acceleration"], a: 3 },
+            { q: "The length of a vector arrow represents its:", options: ["Direction", "Magnitude", "Angle", "Origin"], a: 1 },
+            { q: "The arrowhead of a vector represents its:", options: ["Magnitude", "Length", "Direction", "Speed"], a: 2 },
+            { q: "Is '15 meters' a scalar or vector?", options: ["Scalar", "Vector", "Both", "None"], a: 0 },
+            { q: "Is '15 meters East' a scalar or vector?", options: ["Scalar", "Vector", "Both", "None"], a: 1 },
+            { q: "Speed is a scalar. What is its vector equivalent?", options: ["Acceleration", "Velocity", "Distance", "Force"], a: 1 },
+            { q: "Distance is a scalar. What is its vector equivalent?", options: ["Displacement", "Velocity", "Speed", "Time"], a: 0 },
+            { q: "If you push a desk with 50 Newtons of force to the right, what is the magnitude?", options: ["Right", "Push", "50 Newtons", "Desk"], a: 2 },
+            { q: "If you push a desk with 50 Newtons of force to the right, what is the direction?", options: ["Right", "Push", "50 Newtons", "Desk"], a: 0 },
+            { q: "Which is a vector?", options: ["20°C", "5 kg", "10 m/s North", "2 hours"], a: 2 },
+            { q: "Which is a scalar?", options: ["5 m/s upward", "10 kg", "Pushing left", "Walking East"], a: 1 },
+            { q: "Two vectors are 'equal' if they have the same:", options: ["Magnitude only", "Direction only", "Starting point", "Magnitude and direction"], a: 3 },
+            { q: "Is 'Energy' a scalar or vector?", options: ["Scalar", "Vector", "Both", "Neither"], a: 0 },
+            { q: "Is 'Weight' (gravity pulling down) a scalar or vector?", options: ["Scalar", "Vector", "Both", "Neither"], a: 1 },
+            { q: "If a car travels at 60 km/h, this is its:", options: ["Velocity", "Speed", "Displacement", "Force"], a: 1 },
+            { q: "If a car travels at 60 km/h North, this is its:", options: ["Velocity", "Speed", "Distance", "Mass"], a: 0 },
+            { q: "Resultant vector means:", options: ["The smallest vector", "The final vector after adding", "The starting vector", "A scalar"], a: 1 },
+
+            // --- READING COLUMN VECTORS ---
+            { q: "In a column vector, the top number shows movement:", options: ["Up/Down", "Left/Right", "Diagonal", "Forward"], a: 1 },
+            { q: "In a column vector, the bottom number shows movement:", options: ["Left/Right", "Up/Down", "Diagonal", "Backward"], a: 1 },
+            { q: "Column vector [3, 4] means:", options: ["3 Left, 4 Down", "3 Right, 4 Down", "3 Right, 4 Up", "3 Left, 4 Up"], a: 2 },
+            { q: "Column vector [-2, 5] means:", options: ["2 Left, 5 Up", "2 Right, 5 Up", "2 Left, 5 Down", "2 Right, 5 Down"], a: 0 },
+            { q: "Column vector [6, -1] means:", options: ["6 Left, 1 Down", "6 Right, 1 Down", "6 Right, 1 Up", "6 Left, 1 Up"], a: 1 },
+            { q: "Column vector [-4, -3] means:", options: ["4 Right, 3 Down", "4 Left, 3 Up", "4 Left, 3 Down", "4 Right, 3 Up"], a: 2 },
+            { q: "Write 'Move 5 Right, 2 Up' as a column vector:", options: ["[2, 5]", "[-5, -2]", "[5, 2]", "[-5, 2]"], a: 2 },
+            { q: "Write 'Move 7 Left, 1 Up' as a column vector:", options: ["[7, 1]", "[-7, 1]", "[1, -7]", "[-7, -1]"], a: 1 },
+            { q: "Write 'Move 3 Right, 4 Down' as a column vector:", options: ["[3, -4]", "[-3, 4]", "[4, -3]", "[-4, 3]"], a: 0 },
+            { q: "Write 'Move 2 Left, 8 Down' as a column vector:", options: ["[-8, -2]", "[2, 8]", "[-2, 8]", "[-2, -8]"], a: 3 },
+            { q: "Write 'Move 0 Right, 5 Up' as a column vector:", options: ["[5, 0]", "[0, 5]", "[0, -5]", "[-5, 0]"], a: 1 },
+            { q: "Write 'Move 6 Left, 0 Down' as a column vector:", options: ["[0, -6]", "[6, 0]", "[-6, 0]", "[0, 6]"], a: 2 },
+            { q: "What is [10, 0]?", options: ["10 Right", "10 Left", "10 Up", "10 Down"], a: 0 },
+            { q: "What is [0, -4]?", options: ["4 Right", "4 Left", "4 Up", "4 Down"], a: 3 },
+            { q: "If you don't move at all, the column vector is:", options: ["[1, 1]", "[0, 0]", "[-1, -1]", "[0, 1]"], a: 1 },
+            { q: "Vector [1, 1] means moving:", options: ["1 Right, 1 Down", "1 Left, 1 Up", "1 Right, 1 Up", "1 Left, 1 Down"], a: 2 },
+            { q: "Vector [-5, 5] means moving:", options: ["5 Right, 5 Up", "5 Left, 5 Up", "5 Left, 5 Down", "5 Right, 5 Down"], a: 1 },
+            { q: "Vector [3, -3] means moving:", options: ["3 Right, 3 Up", "3 Left, 3 Up", "3 Right, 3 Down", "3 Left, 3 Down"], a: 2 },
+            { q: "The origin on a grid is [0, 0]. To get to point (2, 3), the vector is:", options: ["[3, 2]", "[2, 3]", "[-2, -3]", "[0, 0]"], a: 1 },
+            { q: "To get from point (0,0) to point (-4, 1), the vector is:", options: ["[1, -4]", "[-4, -1]", "[4, 1]", "[-4, 1]"], a: 3 },
+
+            // --- ADDING VECTORS (Concepts & Word Problems) ---
+            { q: "If you walk 4 m East, then 3 m East, the resultant is:", options: ["7 m East", "1 m East", "12 m East", "7 m West"], a: 0 },
+            { q: "If you walk 5 m North, then 2 m South, the resultant is:", options: ["7 m North", "3 m North", "3 m South", "10 m North"], a: 1 },
+            { q: "If you push 10 N Right, and friction pushes 2 N Left, resultant is:", options: ["12 N Right", "8 N Left", "8 N Right", "20 N Right"], a: 2 },
+            { q: "If two forces of 5 N pull in opposite directions, the resultant is:", options: ["10 N", "5 N", "0 N", "25 N"], a: 2 },
+            { q: "If two identical vectors are added, the resultant's magnitude is:", options: ["Zero", "Halved", "Doubled", "Squared"], a: 2 },
+            { q: "A bird flies 10 mph South into a 2 mph North wind. Resultant velocity:", options: ["12 mph South", "8 mph South", "8 mph North", "20 mph South"], a: 1 },
+            { q: "Adding vector [A, B] and [C, D] equals:", options: ["[A+B, C+D]", "[A+D, B+C]", "[A*C, B*D]", "[A+C, B+D]"], a: 3 },
+            { q: "To add vectors graphically, you place them:", options: ["Tail-to-tail", "Head-to-tail", "Head-to-head", "Parallel"], a: 1 },
+            { q: "A swimmer swims 2 m/s East. The river flows 1 m/s East. Resultant:", options: ["1 m/s East", "3 m/s West", "3 m/s East", "2 m/s East"], a: 2 },
+            { q: "Walking 10 steps forward and 10 steps backward results in a displacement of:", options: ["20 steps", "10 steps", "0 steps", "100 steps"], a: 2 },
+
+            // --- ADDING COLUMN VECTORS (Math) ---
+            { q: "Add: [1, 2] + [3, 4]", options: ["[4, 6]", "[3, 8]", "[2, 2]", "[4, 8]"], a: 0 },
+            { q: "Add: [5, 0] + [2, 3]", options: ["[3, 3]", "[7, 3]", "[10, 0]", "[7, 0]"], a: 1 },
+            { q: "Add: [-2, 4] + [6, 1]", options: ["[4, 5]", "[-8, 5]", "[8, 3]", "[-4, -5]"], a: 0 },
+            { q: "Add: [3, -5] + [4, 2]", options: ["[7, 3]", "[-1, -3]", "[7, -3]", "[12, -10]"], a: 2 },
+            { q: "Add: [-1, -1] + [-3, -4]", options: ["[-4, -5]", "[4, 5]", "[-2, -3]", "[3, 4]"], a: 0 },
+            { q: "Add: [0, 6] + [0, -6]", options: ["[0, 12]", "[0, 0]", "[6, 0]", "[0, -12]"], a: 1 },
+            { q: "Add: [8, 2] + [-8, 3]", options: ["[0, 5]", "[16, 5]", "[0, -1]", "[0, 6]"], a: 0 },
+            { q: "Add: [4, 7] + [-1, -2]", options: ["[3, 5]", "[5, 9]", "[-3, -5]", "[3, 9]"], a: 0 },
+            { q: "Add: [-5, 10] + [5, -5]", options: ["[0, 15]", "[0, 5]", "[-10, 5]", "[10, -5]"], a: 1 },
+            { q: "Add: [2, 2] + [2, 2] + [2, 2]", options: ["[4, 4]", "[8, 8]", "[6, 6]", "[2, 2]"], a: 2 },
+            { q: "Add: [10, -3] + [-5, 8]", options: ["[15, 5]", "[5, 5]", "[5, 11]", "[-5, -11]"], a: 1 },
+            { q: "Add: [-7, -2] + [4, -1]", options: ["[-3, -3]", "[-11, -1]", "[-3, -1]", "[-11, -3]"], a: 0 },
+            { q: "If v = [1, 1] and u = [2, 2], v + u =", options: ["[1, 1]", "[3, 3]", "[2, 2]", "[4, 4]"], a: 1 },
+            { q: "If a = [0, 4] and b = [3, 0], a + b =", options: ["[3, 4]", "[4, 3]", "[0, 0]", "[12, 0]"], a: 0 },
+            { q: "Add: [-2, 5] + [2, -5]", options: ["[4, 10]", "[-4, -10]", "[0, 0]", "[1, 1]"], a: 2 },
+
+            // --- SCALAR MULTIPLICATION ---
+            { q: "Multiply: 2 * [4, 3]", options: ["[8, 6]", "[6, 5]", "[8, 3]", "[4, 6]"], a: 0 },
+            { q: "Multiply: 3 * [1, 5]", options: ["[4, 8]", "[3, 15]", "[3, 5]", "[1, 15]"], a: 1 },
+            { q: "Multiply: 4 * [-2, 2]", options: ["[-8, 8]", "[-6, 6]", "[-2, 8]", "[-8, 2]"], a: 0 },
+            { q: "Multiply: 5 * [0, -3]", options: ["[5, -15]", "[0, -15]", "[0, -3]", "[-15, 0]"], a: 1 },
+            { q: "Multiply: 10 * [2, -1]", options: ["[20, -1]", "[12, 9]", "[20, -10]", "[-20, 10]"], a: 2 },
+            { q: "Multiply: -1 * [5, 4]", options: ["[-5, 4]", "[5, -4]", "[-5, -4]", "[-4, -5]"], a: 2 },
+            { q: "Multiply: -2 * [-3, -4]", options: ["[-6, -8]", "[6, 8]", "[6, -8]", "[-6, 8]"], a: 1 },
+            { q: "Multiply: 0.5 * [8, 10]", options: ["[4, 5]", "[16, 20]", "[8.5, 10.5]", "[4, 10]"], a: 0 },
+            { q: "Multiply: 0.5 * [-4, 6]", options: ["[-2, 3]", "[-8, 12]", "[2, -3]", "[-2, 6]"], a: 0 },
+            { q: "Multiply: 0 * [7, -9]", options: ["[7, -9]", "[0, -9]", "[7, 0]", "[0, 0]"], a: 3 },
+            { q: "If v = [3, 2], what is 3v?", options: ["[9, 6]", "[6, 5]", "[9, 2]", "[3, 6]"], a: 0 },
+            { q: "If u = [-1, 4], what is 2u?", options: ["[-2, 8]", "[1, 6]", "[-2, 4]", "[-1, 8]"], a: 0 },
+            { q: "If a = [5, -2], what is -a (which means -1 * a)?", options: ["[5, 2]", "[-5, 2]", "[-5, -2]", "[2, -5]"], a: 1 },
+            { q: "What does multiplying a vector by 3 do to its arrow?", options: ["Makes it 3 times thicker", "Rotates it 3 degrees", "Makes it 3 times longer", "Nothing"], a: 2 },
+            { q: "What does multiplying a vector by -1 do to its arrow?", options: ["Makes it 1 unit shorter", "Flips it to the exact opposite direction", "Makes it negative length", "Erases it"], a: 1 },
+            { q: "Multiply: 100 * [0.1, 0.2]", options: ["[10, 20]", "[1, 2]", "[100, 200]", "[10.1, 10.2]"], a: 0 },
+            { q: "Multiply: 6 * [1, -1]", options: ["[6, 1]", "[1, -6]", "[-6, 6]", "[6, -6]"], a: 3 },
+            { q: "Multiply: 7 * [-2, 0]", options: ["[-14, 0]", "[-14, 7]", "[14, 0]", "[-5, 7]"], a: 0 },
+            { q: "Multiply: 0.25 * [12, 16] (Hint: 0.25 is 1/4)", options: ["[4, 4]", "[3, 4]", "[48, 64]", "[3, 16]"], a: 1 },
+            { q: "If vector [x, y] is multiplied by 2, the result is [8, 10]. What was [x, y]?", options: ["[4, 5]", "[16, 20]", "[6, 8]", "[10, 12]"], a: 0 }
+        ];
+
+        let currentQuiz = [];
+        let currentIndex = 0;
+        let userAnswers = {};
+        let studentName = "";
+        let startTime;
+        let timerInterval;
+
+        function showAlert(title, message) {
+            document.getElementById('dialog-title').innerText = title;
+            document.getElementById('dialog-message').innerText = message;
+            document.getElementById('custom-dialog-overlay').style.display = 'flex';
+        }
+
+        function closeDialog() {
+            document.getElementById('custom-dialog-overlay').style.display = 'none';
+        }
+
+        function toggleAccordion() {
+            const content = document.getElementById('review-accordion-content');
+            const icon = document.getElementById('accordion-icon');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                icon.innerText = '▼';
+            } else {
+                content.style.display = 'block';
+                icon.innerText = '▲';
+            }
+        }
+
+        // Fisher-Yates shuffle to randomize the 100 questions
+        function shuffleArray(array) {
+            let shuffled = array.slice(); // Copy array
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.floor((now - startTime) / 1000);
+            const mins = Math.floor(diff / 60).toString().padStart(2, '0');
+            const secs = (diff % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `Time: ${mins}:${secs}`;
+        }
+
+        function startQuiz(count) {
+            const nameInput = document.getElementById('student-name-input');
+            studentName = nameInput.value.trim();
+
+            if (!studentName) {
+                showAlert("Name Required", "Please enter your name before starting the quiz.");
+                return;
+            }
+
+            document.getElementById('quiz-setup').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            currentQuiz = shuffleArray(allQuestions).slice(0, count);
+            currentIndex = 0;
+            userAnswers = {};
+
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer(); // Initial call
+
+            showQuestion(0);
+        }
+
+        function showQuestion(index) {
+            const container = document.getElementById('questions-container');
+            const qObj = currentQuiz[index];
+
+            let html = `<div class="question-block" id="qblock-${index}">
+                        <p><strong>Question ${index + 1}:</strong> ${qObj.q}</p>
+                        <div class="options">`;
+
+            qObj.options.forEach((opt, optIndex) => {
+                const checked = userAnswers[index] == optIndex ? 'checked' : '';
+                html += `<label>
+                        <input type="radio" name="q${index}" value="${optIndex}" ${checked} onchange="saveAnswer(${index}, this.value)">
+                        ${opt}
+                     </label>`;
+            });
+
+            html += `</div></div>`;
+            container.innerHTML = html;
+
+            // Update progress
+            document.getElementById('progress-bar').innerText = `Question ${index + 1} of ${currentQuiz.length}`;
+
+            // Update buttons
+            document.getElementById('prev-btn').style.display = index > 0 ? 'block' : 'none';
+            if (index === currentQuiz.length - 1) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('submit-btn').style.display = 'block';
+            } else {
+                document.getElementById('next-btn').style.display = 'block';
+                document.getElementById('submit-btn').style.display = 'none';
+            }
+        }
+
+        function saveAnswer(index, value) {
+            userAnswers[index] = value;
+        }
+
+        function nextQuestion() {
+            if (userAnswers[currentIndex] === undefined) {
+                showAlert("Answer Required", "Please select an answer before moving to the next question.");
+                return;
+            }
+            currentIndex++;
+            showQuestion(currentIndex);
+        }
+
+        function prevQuestion() {
+            currentIndex--;
+            showQuestion(currentIndex);
+        }
+
+        function showResults() {
+            if (userAnswers[currentIndex] === undefined) {
+                showAlert("Answer Required", "Please select an answer before submitting.");
+                return;
+            }
+
+            clearInterval(timerInterval);
+            const endTime = new Date();
+            const timeDiff = Math.floor((endTime - startTime) / 1000);
+            const finalMins = Math.floor(timeDiff / 60).toString().padStart(2, '0');
+            const finalSecs = (timeDiff % 60).toString().padStart(2, '0');
+            const finalTimeStr = `${finalMins}:${finalSecs}`;
+
+            let score = 0;
+            let reviewHtml = '';
+
+            currentQuiz.forEach((qObj, index) => {
+                const answerVal = parseInt(userAnswers[index]);
+                const isCorrect = answerVal === qObj.a;
+                if (isCorrect) score++;
+
+                reviewHtml += `
+                    <div class="review-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <p><strong>Question ${index + 1}:</strong> ${qObj.q}</p>
+                        <p>Your answer: ${qObj.options[answerVal] || 'No answer'}</p>
+                        ${!isCorrect ? `<p style="color: #27ae60;">Correct answer: ${qObj.options[qObj.a]}</p>` : ''}
+                    </div>
+                `;
+            });
+
+            document.getElementById('quiz-container').style.display = 'none';
+            const resultDiv = document.getElementById('result');
+            const total = currentQuiz.length;
+            const percentage = Math.round((score / total) * 100);
+
+            let scoreCategory = "excellent";
+            let message = "Outstanding! You're a Vector Master! 🎉";
+            if (percentage < 80) {
+                scoreCategory = "good";
+                message = "Great effort! Keep practicing! 👍";
+            }
+            if (percentage < 50) {
+                scoreCategory = "poor";
+                message = "Keep studying, you'll get there! 📚";
+            }
+
+            // Trigger Confetti
+            if (percentage >= 50) {
+                const duration = 3 * 1000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                const interval = setInterval(function () {
+                    const timeLeft = animationEnd - Date.now();
+                    if (timeLeft <= 0) return clearInterval(interval);
+                    const particleCount = 50 * (timeLeft / duration);
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+                }, 250);
+            }
+
+            resultDiv.innerHTML = `
+                <div class="result-card score-${scoreCategory}-bg">
+                    <div class="result-name">${studentName}</div>
+                    <div class="result-score-container score-${scoreCategory}">
+                        <div class="result-score-value">${percentage}%</div>
+                        <div class="result-score-label">Final Score</div>
+                    </div>
+                    <p style="font-size: 20px; color: #34495e; font-weight: 600; margin-bottom: 20px;">${message}</p>
+                    <div class="result-stats">
+                        <div class="stat-box">
+                            <span>Correct</span>
+                            <strong>${score} / ${total}</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span>Total Time</span>
+                            <strong>${finalTimeStr}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-header" onclick="toggleAccordion()">
+                        <span>Review Questions</span>
+                        <span id="accordion-icon">▼</span>
+                    </div>
+                    <div id="review-accordion-content" class="accordion-content">
+                        ${reviewHtml}
+                    </div>
+
+                    <button style="margin-top:30px; background-color: #2c3e50;" onclick="location.reload()">Try Again</button>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+
+</html>
